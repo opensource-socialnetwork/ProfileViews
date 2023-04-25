@@ -35,9 +35,10 @@ function profileviews() {
 				'type'  => __who_view_profile_type__,
 				'count' => true,
 		));
+		$users = false;
 		if($looks) {
 				foreach($looks as $item) {
-						$user = ossn_user_by_guid($item->relation_from);
+						$user = ossn_user_by_guid($item->relation_to);
 						if($user) {
 								$users[] = $user;
 						}
@@ -49,13 +50,16 @@ function profileviews() {
 
 		$lists = "<div class='ossn-page-contents'>";
 		$lists .= '<p><strong>' . ossn_print('profileviews') . '</strong></p>';
-		$lists .= ossn_plugin_view('output/users_list', $vars);
-		$lists .= ossn_view_pagination($count);
+		if($users){
+			$lists .= ossn_plugin_view('output/users_list', $vars);
+			$lists .= ossn_view_pagination($count);
+		}
 		$lists .= '</div>';
 
 		$contents = array(
 				'content' => $lists,
 		);
+		$title   = ossn_print('profileviews');
 		$content = ossn_set_page_layout('newsfeed', $contents);
 		echo ossn_view_page($title, $content);
 }
