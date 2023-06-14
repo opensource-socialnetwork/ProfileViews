@@ -69,6 +69,9 @@ function who_viewed_my_profile() {
 		if(!$profile || !$user) {
 				return false;
 		}
+		if($profile->guid == $user->guid){
+				return false;	
+		}
 		if(!ossn_relation_exists($profile->guid, $user->guid, __who_view_profile_type__)) {
 				ossn_add_relation($profile->guid, $user->guid, __who_view_profile_type__);
 		}
