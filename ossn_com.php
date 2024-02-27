@@ -69,11 +69,18 @@ function who_viewed_my_profile() {
 		if(!$profile || !$user) {
 				return false;
 		}
+/*
 		if($profile->guid == $user->guid){
-				return false;	
+				return false;	// causing events tab to disappear from profile page
 		}
 		if(!ossn_relation_exists($profile->guid, $user->guid, __who_view_profile_type__)) {
 				ossn_add_relation($profile->guid, $user->guid, __who_view_profile_type__);
 		}
+*/
+
+		if($profile->guid != $user->guid && !ossn_relation_exists($profile->guid, $user->guid, __who_view_profile_type__)){
+				ossn_add_relation($profile->guid, $user->guid, __who_view_profile_type__);
+		}
+
 }
 ossn_register_callback('ossn', 'init', 'who_viewed_my_profile_init');
